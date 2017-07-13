@@ -35,9 +35,10 @@
 
   <!-- Read joint positions from joint_states, then publish the vehicle's state to tf. -->
 
-  <node name="vehicle_state_publisher" pkg="robot_state_publisher"
+  <node name="robot_state_publisher" pkg="robot_state_publisher"
         type="robot_state_publisher">
     <param name="publish_frequency" value="30.0"/>
+    <!--remap from="/joint_states" to="/f1tenth/joint_states" /-->
   </node>
 
 
@@ -52,7 +53,7 @@
     <!-- Load the joint controllers. One of these publishes the joint states
          to joint_states. -->
 
-  <node name="joint_state_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"
+  <node name="controller_manager" pkg="controller_manager" type="spawner" respawn="false" output="screen"
         args="$(find f1tenth_gazebo)/config/f1tenth_joint_states.yaml"/>
 
   <!-- ros_control racecar launch file -->
