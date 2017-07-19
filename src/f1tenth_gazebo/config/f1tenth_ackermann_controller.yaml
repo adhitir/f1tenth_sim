@@ -1,6 +1,4 @@
 
-
-
 left_front_wheel:
   steering_link_name: left_front_wheel
   steering_controller_name: left_steering_ctrlr

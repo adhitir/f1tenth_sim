@@ -14,8 +14,8 @@ class Control():
 		drive_msg_stamped = AckermannDriveStamped()
 		drive_msg = AckermannDrive()
                 header_msg = Header()
-		drive_msg.speed = 0.1
-		drive_msg.steering_angle = 0
+		drive_msg.speed = 1
+		drive_msg.steering_angle = 0.1
 		drive_msg.acceleration = 0
 		drive_msg.jerk = 0
 		drive_msg.steering_angle_velocity = 0
