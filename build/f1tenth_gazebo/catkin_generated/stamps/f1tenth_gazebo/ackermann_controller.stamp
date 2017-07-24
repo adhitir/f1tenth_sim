@@ -117,7 +117,7 @@ from math import pi
 import rospy
 import tf
 
-from ackermann_msgs.msg import AckermannDrive
+from ackermann_msgs.msg import AckermannDrive, AckermannDriveStamped
 from std_msgs.msg import Float64
 from controller_manager_msgs.srv import ListControllers
 
@@ -233,8 +233,7 @@ class _AckermannCtrlr(object):
             _create_wheel_cmd_pub(list_ctrlrs, right_rear_wheel_ctrlr_name)
 
         self._ackermann_cmd_sub = \
-            rospy.Subscriber("ackermann_cmd", AckermannDrive,
-                             self.ackermann_cmd_cb, queue_size=1)
+            rospy.Subscriber("ackermann_cmd", AckermannDriveStamped, self.ackermann_cmd_cb, queue_size=1)
 
     def spin(self):
         """Control the vehicle."""
@@ -289,10 +288,10 @@ class _AckermannCtrlr(object):
         """
         self._last_cmd_time = rospy.get_time()
         with self._ackermann_cmd_lock:
-            self._steer_ang = ackermann_cmd.steering_angle
-            self._steer_ang_vel = ackermann_cmd.steering_angle_velocity
-            self._speed = ackermann_cmd.speed
-            self._accel = ackermann_cmd.acceleration
+            self._steer_ang = ackermann_cmd.drive.steering_angle
+            self._steer_ang_vel = ackermann_cmd.drive.steering_angle_velocity
+            self._speed = ackermann_cmd.drive.speed
+            self._accel = ackermann_cmd.drive.acceleration
 
 
     def _get_front_wheel_params(self, side):
@@ -350,6 +349,73 @@ class _AckermannCtrlr(object):
                 return numpy.array(trans)
             except:
                 pass
+
+    def _ctrl_steering(self, steer_ang, steer_ang_vel_limit, delta_t):
+        # Control the steering joints.
+
+        # Compute theta, the virtual front wheel's desired steering angle.
+        if steer_ang_vel_limit > 0.0:
+            # Limit the steering velocity.
+            ang_vel = (steer_ang - self._last_steer_ang) / delta_t
+            ang_vel = max(-steer_ang_vel_limit,
+                           min(ang_vel, steer_ang_vel_limit))
+            theta = self._last_steer_ang + ang_vel * delta_t
+        else:
+            theta = steer_ang
+
+        # Compute the desired steering angles for the left and right front
+        # wheels.
+        center_y = self._wheelbase * math.tan((pi / 2) - theta)
+        steer_ang_changed = theta != self._last_steer_ang
+        if steer_ang_changed:
+            self._last_steer_ang = theta
+            self._theta_left = \
+                _get_steer_ang(math.atan(self._inv_wheelbase *
+                                         (center_y - self._joint_dist_div_2)))
+            self._theta_right = \
+                _get_steer_ang(math.atan(self._inv_wheelbase *
+                                         (center_y + self._joint_dist_div_2)))
+
+        return steer_ang_changed, center_y
+
+    def _ctrl_wheels(self, speed, accel_limit, delta_t, steer_ang_changed,
+                    center_y):
+        # Control the axle joints.
+
+        # Compute veh_speed, the vehicle's desired speed.
+        if accel_limit > 0.0:
+            # Limit the vehicle's acceleration.
+            self._last_accel_limit = accel_limit
+            accel = (speed - self._last_speed) / delta_t
+            accel = max(-accel_limit, min(accel, accel_limit))
+            veh_speed = self._last_speed + accel * delta_t
+        else:
+            self._last_accel_limit = accel_limit
+            veh_speed = speed
+
+        # Compute the desired angular velocities of the wheels.
+        if veh_speed != self._last_speed or steer_ang_changed:
+            self._last_speed = veh_speed
+            left_dist = center_y - self._joint_dist_div_2
+            right_dist = center_y + self._joint_dist_div_2
+
+            # Front
+            gain = (2 * pi) * veh_speed / abs(center_y)
+            r = math.sqrt(left_dist ** 2 + self._wheelbase_sqr)
+            self._left_front_ang_vel = gain * r * self._left_front_inv_circ
+            r = math.sqrt(right_dist ** 2 + self._wheelbase_sqr)
+            self._right_front_ang_vel = gain * r * self._right_front_inv_circ
+            # Rear
+            gain = (2 * pi) * veh_speed / center_y
+            self._left_rear_ang_vel = \
+                gain * left_dist * self._left_rear_inv_circ
+            self._right_rear_ang_vel = \
+                gain * right_dist * self._right_rear_inv_circ
+
+    _DEF_WHEEL_DIA = 0.1    # Default wheel diameter. Unit: meter.
+    _DEF_EQ_POS = 0.0       # Default equilibrium position. Unit: meter.
+    _DEF_CMD_TIMEOUT = 0.5  # Default command timeout. Unit: second.
+    _DEF_PUB_FREQ = 30.0    # Default publishing frequency. Unit: hertz.
 
 # end _AckermannCtrlr
 

@@ -1,2 +1,2 @@
-ackermann_msgs:f1tenth_description:f1tenth_gazebo
+ackermann_msgs:f1tenth_control:f1tenth_description:f1tenth_gazebo
 -DCATKIN_DEVEL_PREFIX=/home/labpc/f1tenth_sim/devel -DCMAKE_INSTALL_PREFIX=/home/labpc/f1tenth_sim/install -G Unix Makefiles
