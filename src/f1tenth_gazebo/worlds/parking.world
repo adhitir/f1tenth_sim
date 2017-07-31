@@ -29,7 +29,7 @@
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>6.4 3</size>
+              <size>4.256 2.86</size>
             </plane>
           </geometry>
           <material>
@@ -64,7 +64,7 @@
     </light>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>-0.568733 -6.77804 4.44366 -3.09699e-17 0.459643 1.40419</pose>
+        <pose>0.086013 -4.4804 3.29788 6.58362e-17 0.567643 1.50019</pose>
         <view_controller>orbit</view_controller>
       </camera>
     </gui>
@@ -86,6 +86,205 @@
       <elevation>0</elevation>
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
+    <model name='audi_a3'>
+      <link name='link'>
+        <inertial>
+          <pose>0.1 0 0 0 -0 0</pose>
+          <mass>4</mass>
+          <inertia>
+            <ixx>0.0141666</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0541666</iyy>
+            <iyz>0</iyz>
+            <izz>0.0666666</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://audi_a3/meshes/audi_a3.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://audi_a3/meshes/audi_a3.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose>-1.41142 0 0 0 -0 0</pose>
+      <static>0</static>
+    </model>
+    <model name='passo'>
+      <link name='link'>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0.1 0 0 0 -0 0</pose>
+          <mass>4</mass>
+          <inertia>
+            <ixx>0.0141666</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0541666</iyy>
+            <iyz>0</iyz>
+            <izz>0.0666666</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://passo/meshes/passo.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://passo/meshes/passo.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose>-1 0 0 0 -0 0</pose>
+      <static>0</static>
+    </model>
+    <model name='passo_white'>
+      <link name='link'>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0.1 0 0 0 -0 0</pose>
+          <mass>4</mass>
+          <inertia>
+            <ixx>0.0141666</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0541666</iyy>
+            <iyz>0</iyz>
+            <izz>0.0666666</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://passo_white/meshes/passo_white.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://passo_white/meshes/passo_white.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose>0 1 0 0 -0 0</pose>
+      <static>0</static>
+    </model>
+    <model name='passo_0'>
+      <link name='link'>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0.1 0 0 0 -0 0</pose>
+          <mass>4</mass>
+          <inertia>
+            <ixx>0.0141666</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0541666</iyy>
+            <iyz>0</iyz>
+            <izz>0.0666666</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://passo/meshes/passo.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://passo/meshes/passo.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose>1 1 0 0 -0 0</pose>
+      <static>0</static>
+    </model>
     <model name='grey_wall'>
       <static>1</static>
       <link name='link'>
@@ -130,16 +329,25 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose>0.402469 2 0 0 -0 0</pose>
+      <pose>-0.414862 1.43444 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>46 798000000</sim_time>
-      <real_time>48 968123079</real_time>
-      <wall_time>1500665772 523395725</wall_time>
-      <model name='grey_wall'>
-        <pose>0.097442 1.62399 0 0 -0 0</pose>
+      <sim_time>306 883000000</sim_time>
+      <real_time>43 562062351</real_time>
+      <wall_time>1501189634 444112216</wall_time>
+      <model name='audi_a3'>
+        <pose>0.008966 0.826049 0.069418 0.001241 -0.004861 -1.65064</pose>
         <link name='link'>
-          <pose>0.097442 1.62399 1.4 0 -0 0</pose>
+          <pose>0.008966 0.826049 0.069418 0.001241 -0.004861 -1.65064</pose>
+          <velocity>0.000363 -0.00188 -0.004622 0.027083 0.00523 1e-06</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='grey_wall'>
+        <pose>-0.13017 1.41556 0 0 -0 0</pose>
+        <link name='link'>
+          <pose>-0.13017 1.41556 1.4 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -149,6 +357,33 @@
         <pose>0 0 0 0 -0 0</pose>
         <link name='link'>
           <pose>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='passo'>
+        <pose>-0.451664 0.804836 0.107259 8.47033e-22 1.2e-05 1.54111</pose>
+        <link name='link'>
+          <pose>-0.451664 0.804836 0.107259 8.47033e-22 1.2e-05 1.54111</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='passo_0'>
+        <pose>0.408801 0.815864 0.107259 -3e-06 -1.2e-05 -1.5942</pose>
+        <link name='link'>
+          <pose>0.408801 0.815864 0.107259 -3e-06 -1.2e-05 -1.5942</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='passo_white'>
+        <pose>-1.34365 0.814252 0.107261 6.6e-05 4e-05 -1.62711</pose>
+        <link name='link'>
+          <pose>-1.34365 0.814252 0.107261 6.6e-05 4e-05 -1.62711</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
