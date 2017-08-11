@@ -32,38 +32,68 @@ def main():
 
     rospy.init_node('ackermann_listener')
 
-    rospy.Subscriber('/ackermann_cmd', AckermannDriveStamped, ackermann_callback)
+    while True:
+	    #rospy.Subscriber('/ackermann_cmd', AckermannDriveStamped, ackermann_callback,queue_size=1)
+	msg = rospy.wait_for_message('/ackermann_cmd',AckermannDriveStamped)
+	with open(filename, 'a') as csvfile:
+	   	filewriter = csv.writer(csvfile, delimiter = ',')
+		msgString = str(msg)
+		msgList = string.split(msgString, '\n')
+		instantaneousListOfData = []
+		for nameValuePair in msgList:
+			splitPair = string.split(nameValuePair, ':')
+		        for i in range(len(splitPair)):	#should be 0 to 1
+				splitPair[i] = string.strip(splitPair[i])
+			instantaneousListOfData.append(splitPair)
+		onlySteeringAngle = instantaneousListOfData[7:8]
+		#filewriter.writerow(onlySteeringAngle)
+		#write the first row from the first element of each pair
+		if firstIteration:	# header
+			headers = ["rosbagTimestamp"]	#first column header
+			for pair in onlySteeringAngle:
+				headers.append(pair[0])
+			filewriter.writerow(headers)
+			firstIteration = False
+		# write the value from each pair to the file
+		t = rospy.Time.now()
+		values = [str(t)]	#first column will have rosbag timestamp
+		for pair in onlySteeringAngle:
+			if len(pair) > 1:
+				values.append(pair[1])
+		filewriter.writerow(values)        
+        rospy.sleep(2)
 
     # Spin until ctrl + c
     rospy.spin()
 
-def ackermann_callback(msg):
+'''def ackermann_callback(msg):
     global filewriter, firstIteration
     with open(filename, 'a') as csvfile:
    	filewriter = csv.writer(csvfile, delimiter = ',')
-
-	msgString = str(msg)
+        msgString = str(msg)
 	msgList = string.split(msgString, '\n')
-	instantaneousListOfData = []
+        instantaneousListOfData = []
         for nameValuePair in msgList:
 		splitPair = string.split(nameValuePair, ':')
-		for i in range(len(splitPair)):	#should be 0 to 1
+                for i in range(len(splitPair)):	#should be 0 to 1
 			splitPair[i] = string.strip(splitPair[i])
 		instantaneousListOfData.append(splitPair)
+        onlySteeringAngle = instantaneousListOfData[7:8]
+        #filewriter.writerow(onlySteeringAngle)
 	#write the first row from the first element of each pair
 	if firstIteration:	# header
 		headers = ["rosbagTimestamp"]	#first column header
-		for pair in instantaneousListOfData:
+		for pair in onlySteeringAngle:
 			headers.append(pair[0])
 		filewriter.writerow(headers)
 		firstIteration = False
 	# write the value from each pair to the file
         t = rospy.Time.now()
 	values = [str(t)]	#first column will have rosbag timestamp
-	for pair in instantaneousListOfData:
+	for pair in onlySteeringAngle:
 		if len(pair) > 1:
 			values.append(pair[1])
-	filewriter.writerow(values)        
+	filewriter.writerow(values) '''       
 
 if __name__ == '__main__':
     main()

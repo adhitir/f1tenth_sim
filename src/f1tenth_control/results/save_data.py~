@@ -77,7 +77,7 @@ def main():
 
 def image_callback1(msg):
     global count1
-    rospy.sleep(1)
+    rospy.sleep(2)
     print("Received an image!")
     try:
         # Convert your ROS Image message to OpenCV2
@@ -91,7 +91,7 @@ def image_callback1(msg):
         count1 += 1
 
 def image_callback2(msg):
-    rospy.sleep(1)
+    rospy.sleep(2)
     global count2
     print("Received an image!")
     try:
@@ -106,7 +106,7 @@ def image_callback2(msg):
         count2 += 1
 
 def image_callback3(msg):
-    rospy.sleep(1)
+    rospy.sleep(2)
     global count3
     print("Received an image!")
     try:
@@ -121,7 +121,7 @@ def image_callback3(msg):
         count3 += 1
 
 def image_callback4(msg):
-    rospy.sleep(1)
+    rospy.sleep(2)
     global count4
     print("Received an image!")
     try:
@@ -136,34 +136,34 @@ def image_callback4(msg):
         count4 += 1
 
 def ackermann_callback(msg):
-    rospy.sleep(1)
+    rospy.sleep(2)
     global filewriter, firstIteration
     with open(filename, 'a') as csvfile:
    	filewriter = csv.writer(csvfile, delimiter = ',')
-
-	msgString = str(msg)
+        msgString = str(msg)
 	msgList = string.split(msgString, '\n')
-	instantaneousListOfData = []
+        instantaneousListOfData = []
         for nameValuePair in msgList:
 		splitPair = string.split(nameValuePair, ':')
-		for i in range(len(splitPair)):	#should be 0 to 1
+                for i in range(len(splitPair)):	#should be 0 to 1
 			splitPair[i] = string.strip(splitPair[i])
 		instantaneousListOfData.append(splitPair)
+        onlySteeringAngle = instantaneousListOfData[7:8]
+        #filewriter.writerow(onlySteeringAngle)
 	#write the first row from the first element of each pair
 	if firstIteration:	# header
 		headers = ["rosbagTimestamp"]	#first column header
-		for pair in instantaneousListOfData:
+		for pair in onlySteeringAngle:
 			headers.append(pair[0])
 		filewriter.writerow(headers)
 		firstIteration = False
 	# write the value from each pair to the file
         t = rospy.Time.now()
 	values = [str(t)]	#first column will have rosbag timestamp
-	for pair in instantaneousListOfData:
+	for pair in onlySteeringAngle:
 		if len(pair) > 1:
 			values.append(pair[1])
-	filewriter.writerow(values)
-
+	filewriter.writerow(values)      
 if __name__ == '__main__':
     main()
 
