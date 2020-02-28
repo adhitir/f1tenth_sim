@@ -1,6 +1,9 @@
 
+### Gazebo Model and Environment for F1Tenth 
 
-For the Reverse Parking Experiment Only 
+This project is developed in and tested on ROS Indigo. Created primarily to procure datasets for a machine learning model on reverse parking. 
+The results of that project can be found in this paper:
+Li, Rui, Wang, Weitian, Chen, Yi, Srinivasan, Srivatsan, and Krovi, Venkat N. "An End-to-End Fully Automatic Bay Parking Approach for Autonomous Vehicles." Proceedings of the ASME 2018 Dynamic Systems and Control Conference. 
 
 First terminal:
 
