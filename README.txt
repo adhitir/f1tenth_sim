@@ -1,5 +1,5 @@
 
-##Gazebo Model and Environment for F1Tenth 
+#Gazebo Model and Environment for F1Tenth 
 
 This project is developed in and tested on ROS Indigo. Created primarily to procure datasets for a machine learning model on reverse parking. 
 The results of that project can be found in this paper:
